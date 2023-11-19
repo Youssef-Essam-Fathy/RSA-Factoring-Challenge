@@ -1,0 +1,29 @@
+#!/usr/bin/python3
+import math
+
+def is_prime(num1):
+    if num1 < 2:
+        return False
+    for i in range(2, int(math.sqrt(num1)) + 1):
+        if num1 % i == 0:
+            return False
+    return True
+
+def factorize(num2):
+    for i in range(2, num2):
+        if num2 % i == 0 and is_prime(i) and is_prime(num2 // i):
+            return i, num2 // i
+
+def main(filename):
+    with open(filename, 'r') as file:
+        for line in file:
+            number = int(line.strip())
+            factor1, factor2 = factorize(number)
+            print(f"{number}={factor1}*{factor2}")
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) != 2:
+        print("Usage: factors <file>")
+    else:
+        main(sys.argv[1])
